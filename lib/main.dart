@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(Pimorize());
 
@@ -58,6 +59,11 @@ class _KeyPadPageState extends State<KeyPadPage> {
     );
   }
 
+  updateRecord(record) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('record', record);
+  }
+
   void guess(String guess) {
     setState(() {
       hint = '';
@@ -82,6 +88,7 @@ class _KeyPadPageState extends State<KeyPadPage> {
         if (strikes == 3) {
           // TODO show alert with correct answer
           // TODO Fanfare for breaking record
+          updateRecord(record);
           guessed = '';
           strikes = 0;
         }
@@ -103,6 +110,19 @@ class _KeyPadPageState extends State<KeyPadPage> {
     );
   }
 
+  _getRecord() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      record = (prefs.getInt('record') ?? 0);
+    });
+  }
+
+  @override
+  void initState() {
+    _getRecord();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -110,8 +130,9 @@ class _KeyPadPageState extends State<KeyPadPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         // TODO: Add pi symbol = here
+        // TODO: Make this scrollable
         Text(
-          guessed,
+          'Π=' + guessed,
           style: TextStyle(
             fontSize: 35.0,
             color: Colors.white,
@@ -182,9 +203,3 @@ class _KeyPadPageState extends State<KeyPadPage> {
     );
   }
 }
-
-/*
-question1: 'You can lead a cow down stairs but not up stairs.', false,
-question2: 'Approximately one quarter of human bones are in the feet.', true,
-question3: 'A slug\'s blood is green.', true,
-*/
