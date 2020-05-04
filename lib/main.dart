@@ -7,11 +7,11 @@ void main() => runApp(Pimorize());
 class Pimorize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TODO Accept keyboard input for web version
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
-        appBar: AppBar(title: Text('PiMoRize')),
+        appBar: AppBar(title: Text('PI-morize')),
+        // TODO add drwaer/hamburger to reset stuff
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 10.0),
@@ -78,7 +78,6 @@ class _KeyPadPageState extends State<KeyPadPage> {
       if (guess == nextNumber) {
         guessed += guess;
         if (guessed.length > record) {
-          // TODO publish record to some kind of score keeping website
           record = guessed.length;
         }
       } else {
@@ -166,7 +165,6 @@ class _KeyPadPageState extends State<KeyPadPage> {
             ),
           ),
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -175,7 +173,6 @@ class _KeyPadPageState extends State<KeyPadPage> {
             strike(position: 3),
           ],
         ),
-        // TODO: Make buttons taller, fill row
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
@@ -224,7 +221,6 @@ class _KeyPadPageState extends State<KeyPadPage> {
             ),
           ],
         ),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[],
