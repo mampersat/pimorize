@@ -52,6 +52,9 @@ class _KeyPadPageState extends State<KeyPadPage> {
         padding: EdgeInsets.all(10.0),
         child: FlatButton(
           color: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: Text(
             text,
             textAlign: TextAlign.center,
