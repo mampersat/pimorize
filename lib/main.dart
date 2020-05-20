@@ -7,6 +7,7 @@ void main() => runApp(Pimorize());
 class Pimorize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print('build function');
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.grey.shade900,
@@ -46,18 +47,23 @@ class _KeyPadPageState extends State<KeyPadPage> {
       color = Colors.green;
     }
 
-    return FlatButton(
-      color: color,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 45.0,
+    return Expanded(
+      child: Padding(
+        padding: EdgeInsets.all(10.0),
+        child: FlatButton(
+          color: color,
+          child: Text(
+            text,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 45.0,
+            ),
+          ),
+          onPressed: () {
+            guess(text);
+          },
         ),
       ),
-      onPressed: () {
-        guess(text);
-      },
     );
   }
 
@@ -66,6 +72,7 @@ class _KeyPadPageState extends State<KeyPadPage> {
     await prefs.setInt('record', record);
   }
 
+  // TODO refactor all of this into something not called a "BRAIN"
   void guess(String guess) {
     setState(() {
       hint = '';
@@ -96,6 +103,8 @@ class _KeyPadPageState extends State<KeyPadPage> {
           if (guessed.length == record) {
             recordText = '\n New Record! $record';
           }
+
+          // TODO alert should show last 5 or last "block of 5" with red fail
           Alert(
             context: context,
             title: 'Strike 3',
@@ -149,7 +158,7 @@ class _KeyPadPageState extends State<KeyPadPage> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Container(
@@ -173,53 +182,67 @@ class _KeyPadPageState extends State<KeyPadPage> {
             strike(position: 3),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            numberButton(text: '7'),
-            numberButton(text: '8'),
-            numberButton(text: '9'),
-          ],
+        Expanded(
+          //flex: 8,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              numberButton(text: '7'),
+              numberButton(text: '8'),
+              numberButton(text: '9'),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            numberButton(text: '4'),
-            numberButton(text: '5'),
-            numberButton(text: '6'),
-          ],
+        Expanded(
+          //flex: 8,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              numberButton(text: '4'),
+              numberButton(text: '5'),
+              numberButton(text: '6'),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            numberButton(text: '1'),
-            numberButton(text: '2'),
-            numberButton(text: '3'),
-          ],
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              numberButton(text: '1'),
+              numberButton(text: '2'),
+              numberButton(text: '3'),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              'Record\n' + record.toString(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.white,
+        Expanded(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Text(
+                'Record\n' + record.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.white,
+                ),
               ),
-            ),
 
-            numberButton(text: '0'),
-            //numberButton(text: '.'),
-            Text(
-              'Current\n' + guessed.length.toString(),
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 25.0,
-                color: Colors.white,
+              numberButton(text: '0'),
+              //numberButton(text: '.'),
+              Text(
+                'Current\n' + guessed.length.toString(),
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 25.0,
+                  color: Colors.white,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,

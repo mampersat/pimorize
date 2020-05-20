@@ -1,4 +1,4 @@
-package mampersat.com.pimorize
+package com.mampersat.pimorize2020
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity
